@@ -7,7 +7,7 @@ $settings = @{
     "DNSIP"           = "127.0.0.1"
     "DNSForwarderIPs" = "8.8.8.8","8.8.4.4"
     "Password"        = "Pass@word1"
-    "DNSClientInterfaceAlias" = "Ethernet"
+    "DNSClientInterfaceAlias" = $(Get-NetIPConfiguration | Select -first 1 | Select -ExpandProperty InterfaceAlias)
     "DomainAdminUser" = "alan.reid"
 }
 
@@ -39,6 +39,7 @@ $ConfigData = @{
         DomainNetbios = $settings.DomainNetBIOS
         Password = $settings.Password
         DomainAdminUser = $settings.DomainAdminUser
+        DNSClientInterfaceAlias = $settings.DNSClientInterfaceAlias
         # DO NOT USE the below in production. Lab only!
         PsDscAllowPlainTextPassword = $true
         PSDscAllowDomainUser = $true
@@ -92,7 +93,8 @@ Configuration DC {
             DomainNetbiosName = $node.DomainNetBIOS
             DomainAdministratorCredential = $Credential
             SafemodeAdministratorPassword = $Credential
-            DependsOn = '[xComputer]SetName', '[xIPAddress]SetIP', '[WindowsFeature]ADDSInstall'
+            #DependsOn = '[xComputer]SetName', '[xIPAddress]SetIP', '[WindowsFeature]ADDSInstall'
+            DependsOn = '[xComputer]SetName', '[WindowsFeature]ADDSInstall'
         }
 
         xADUser demouser1 {
