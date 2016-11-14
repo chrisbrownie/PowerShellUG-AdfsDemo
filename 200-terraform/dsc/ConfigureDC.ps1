@@ -6,7 +6,7 @@ $settings = @{
     "DomainNetBIOS"   = "lab"
     "DNSIP"           = "127.0.0.1"
     "DNSForwarderIPs" = "8.8.8.8","8.8.4.4"
-    "Password"        = "pass@word1"
+    "Password"        = "Pass@word1"
     "DNSClientInterfaceAlias" = "Ethernet"
     "DomainAdminUser" = "alan.reid"
 }
