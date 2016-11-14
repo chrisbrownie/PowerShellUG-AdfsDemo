@@ -25,7 +25,7 @@ resource "aws_instance" "dc" {
 Start-Transcript C:\provisionlog.txt
 Set-ExecutionPolicy Unrestricted -confirm:$false
 Get-NetIPAddress | Where {$_.InterfaceAlias -ilike "Ethernet*" -and $_.AddressFamily -eq "IPv4"} | % { Set-DnsClientServerAddress -InterfaceIndex $_.InterfaceIndex -ServerAddresses "8.8.8.8","8.8.4.4" }
-iwr https://gist.githubusercontent.com/chrisbrownie/e2b819e0cc87a31c742ec7a5468b7536/raw/3888bf37100f6cbb3c7c68cbc561a89d6c4d4cf4/ConfigureDC.ps1 -UseBasicParsing | iex
+iwr ${DCConfigScriptUri} -UseBasicParsing | iex
 Stop-Transcript
 </powershell>
 EOF
