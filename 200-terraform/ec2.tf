@@ -9,7 +9,7 @@ data "aws_ami" "windowsserver" {
 
 resource "aws_instance" "dc" {
     ami = "${data.aws_ami.windowsserver.id}"
-    instance_type = "t2.micro"
+    instance_type = "${var.instanceSize}"
     vpc_security_group_ids = ["${aws_security_group.rdp.id}"]
     subnet_id = "${aws_subnet.public1.id}"
     associate_public_ip_address = true

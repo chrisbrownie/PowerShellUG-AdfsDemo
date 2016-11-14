@@ -30,6 +30,10 @@ variable "route53domainsuffix" {
     default = "lab"
 }
 
+variable "instanceSize" {
+    default = "t2.medium"
+}
+
 variable "DCName" {
     default = "DC"
 }
