@@ -33,6 +33,4 @@ This script applies my list of AD FS best practices for Windows Server 2016 to t
 
 ## References
 * Review the slides from the presentation on [Docs.com](https://docs.com/chrisbrown)
-* Learn more about [Packer](https://www.packer.io/)
-* Learn more about [Vagrant](https://www.vagrantup.com/)
 * Contribute to or view my [AD FS Branding](https://github.com/chrisbrownie/Invoke-AdfsBranding) script
