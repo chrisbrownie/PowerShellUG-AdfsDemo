@@ -60,5 +60,10 @@ variable "FSConfigScriptUri" {
 
 variable "awskey" {
     default = "labkey"
+    description = "Name of SSH key to encrypt password"
 }
 
+variable "env" {
+    default = "lab"
+    description = "Resources will be tagged with this 'env' value"
+}
