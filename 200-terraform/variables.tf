@@ -42,20 +42,12 @@ variable "DCIP" {
     default = "192.168.1.20"
 }
 
-variable "DCConfigScriptUri" {
-    description = "URL to the script that should be launched to configure DC."
-}
-
 variable "FSName" {
     default = "FS"
 }
 
 variable "FSIP" {
     default = "192.168.1.50"
-}
-
-variable "FSConfigScriptUri" {
-    description = "URL to the script that should be launched to configure FS."
 }
 
 variable "awskey" {
