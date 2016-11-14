@@ -40,6 +40,7 @@ $ConfigData = @{
         Password = $settings.Password
         DomainAdminUser = $settings.DomainAdminUser
         DNSClientInterfaceAlias = $settings.DNSClientInterfaceAlias
+        DNSIP = $settings.DNSIP
         # DO NOT USE the below in production. Lab only!
         PsDscAllowPlainTextPassword = $true
         PSDscAllowDomainUser = $true
@@ -97,7 +98,7 @@ Configuration DC {
             DependsOn = '[xComputer]SetName', '[WindowsFeature]ADDSInstall'
         }
 
-        xADUser demouser1 {
+        <#xADUser demouser1 {
             DomainAdministratorCredential = $Credential
             DomainName                    = $Node.DomainFqdn
             UserName                      = $Node.DomainAdminUser
@@ -109,7 +110,7 @@ Configuration DC {
             SetScript = { Add-ADGroupMember -Identity "Domain Admins" -Members $using:Node.DomainAdminUser }
             TestScript = { Get-ADGroupMember -Identity "Domain Admins" | Where {$_.Name -eq $using:Node.DomainAdminUser } }
             GetScript = { Get-ADGroupMember -Identity "Domain Admins" | Where {$_.Name -eq $using:Node.DomainAdminUser } }
-        }
+        }#>
     }
 }
 
