@@ -28,6 +28,8 @@ configuration LCM {
 
 LCM -OutputPath $env:TEMP
 Set-DscLocalConfigurationManager -Path $env:TEMP
+# Show info for logging purposes
+Get-DscLocalConfigurationManager
 
 $ConfigData = @{
     AllNodes = @(@{
@@ -37,6 +39,9 @@ $ConfigData = @{
         DomainNetbios = $settings.DomainNetBIOS
         Password = $settings.Password
         DomainAdminUser = $settings.DomainAdminUser
+        # DO NOT USE the below in production. Lab only!
+        PsDscAllowPlainTextPassword = $true
+        PSDscAllowDomainUser = $true
     })
 }
 
