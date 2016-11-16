@@ -1,20 +1,11 @@
-data "aws_ami" "windowsserver" {
-    most_recent = true
-    filter {
-        name = "name"
-        values = ["*Windows_Server-2016-English-Full-Base-*"]
-    }
-    owners = ["amazon"]
-}
-
-resource "aws_instance" "dc" {
+resource "aws_instance" "fs" {
     ami = "${data.aws_ami.windowsserver.id}"
     instance_type = "${var.instanceSize}"
     vpc_security_group_ids = ["${aws_security_group.rdp.id}"]
     subnet_id = "${aws_subnet.public1.id}"
     associate_public_ip_address = true
     key_name = "${var.awskey}"
-    private_ip = "${var.DCIP}" 
+    private_ip = "${var.FSIP}" 
 
     # Terminate when the instances shut themselves down
     instance_initiated_shutdown_behavior = "terminate"
@@ -28,21 +19,21 @@ resource "aws_instance" "dc" {
 Start-Transcript C:\provisionlog.txt
 Set-ExecutionPolicy Unrestricted -confirm:$false
 Get-NetIPAddress | Where {$_.InterfaceAlias -ilike "Ethernet*" -and $_.AddressFamily -eq "IPv4"} | % { Set-DnsClientServerAddress -InterfaceIndex $_.InterfaceIndex -ServerAddresses "8.8.8.8","8.8.4.4" }
-iwr 'https://raw.githubusercontent.com/chrisbrownie/PowerShellUG-AdfsDemo/master/200-terraform/dsc/ConfigureDC.ps1' -UseBasicParsing | iex
+iwr 'https://raw.githubusercontent.com/chrisbrownie/PowerShellUG-AdfsDemo/master/200-terraform/dsc/ConfigureFS.ps1' -UseBasicParsing | iex
 Stop-Transcript
 </powershell>
 EOF
     
     tags {
-        Name = "${var.DCName}"
+        Name = "${var.FSName}"
         env = "${var.env}"
     }
 }
 
-resource "aws_route53_record" "dc" {
+resource "aws_route53_record" "fs" {
     zone_id = "${var.route53zoneid}"
-    name    = "${var.DCName}.${var.route53domainsuffix}"
+    name    = "${var.FSName}.${var.route53domainsuffix}"
     type    = "A"
     ttl     = "60"
-    records = ["${aws_instance.dc.public_ip}"]
+    records = ["${aws_instance.fs.public_ip}"]
 }
