@@ -8,7 +8,8 @@ $settings = @{
     "DNSForwarderIPs" = "8.8.8.8","8.8.4.4"
     "Password"        = "Pass@word1"
     "DNSClientInterfaceAlias" = $(Get-NetIPConfiguration | Select -first 1 | Select -ExpandProperty InterfaceAlias)
-    "DomainAdminUser" = "alan.reid"
+    "DomainAdminUser" = "xareid"
+    "DomainAdminUserDisplayName" = "Alan Reid (Admin)"
     "LabLifeSpan"      = 8 #hours (until the lab shuts itself down)
 }
 
@@ -40,6 +41,7 @@ $ConfigData = @{
         DomainNetbios = $settings.DomainNetBIOS
         Password = $settings.Password
         DomainAdminUser = $settings.DomainAdminUser
+        DomainAdminUserDisplayName = $settings.DomainAdminUserDisplayName
         DNSClientInterfaceAlias = $settings.DNSClientInterfaceAlias
         DNSIP = $settings.DNSIP
         DnsForwarders = $settings.DnsForwarderIPs
@@ -133,6 +135,21 @@ Configuration DC {
             IsSingleInstance = 'Yes'
             Credential       = $Credential
             DependsOn        = '[WindowsFeature]ADCS-Web-Enrollment','[xAdcsCertificationAuthority]CA' 
+        }
+
+        xADUser adminUser {
+            Ensure     = 'Present'
+            DomainName = $node.DomainFqdn
+            Username   = $node.DomainAdminUser
+            Password   = $node.Password
+            DisplayName = $node.DomainAdminUserDisplayName
+            DependsOn = '[xADDomain]DC'
+        }
+
+        xADGroup DomainAdmins {
+            Ensure = 'Present'
+            GroupName = 'Domain Admins'
+            MembersToInclude = $node.DomainAdminUser
         }
     }
 }
