@@ -140,7 +140,7 @@ Configuration DC {
             Ensure     = 'Present'
             DomainName = $node.DomainFqdn
             Username   = $node.DomainAdminUser
-            Password   = $node.Password
+            Password   = $Credential
             DisplayName = $node.DomainAdminUserDisplayName
             DependsOn = '[xADDomain]DC'
         }
