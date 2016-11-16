@@ -107,11 +107,33 @@ Configuration DC {
             Name = 'ADCS-Cert-Authority'
         }
 
+        WindowsFeature RSAT-ADCS {
+            Ensure = 'Present'
+            Name   = 'RSAT-ADCS'
+            IncludeAllSubFeature = $true
+        }
+
+        WindowsFeature ADCS-Web-Enrollment {
+            Ensure = 'Present'
+            Name   = 'ADCS-Web-Enrollment'
+            DependsOn = '[WindowsFeature]ADCS-Cert-Authority' 
+        }
+
         xAdcsCertificationAuthority CA {
-            Ensure = 'Present'        
-            Credential = $Credential
-            CAType = 'EnterpriseRootCA'
-            DependsOn = '[WindowsFeature]ADCS-Cert-Authority'
+            Ensure            = 'Present'        
+            Credential        = $Credential
+            CAType            = 'EnterpriseRootCA'
+            CACommonName      = "$($node.DomainNetBIOS) Root CA"
+            HashAlgorithmName = 'SHA256'
+            DependsOn         = '[WindowsFeature]ADCS-Cert-Authority'
+        }
+
+        xAdcsWebEnrollment CertSrv {
+            Ensure           = 'Present'
+            IsSingleInstance = 'Yes'
+            Name             = 'CertSrv'
+            Credential       = $Credential
+            DependsOn        = '[WindowsFeature]ADCS-Web-Enrollment','[xAdcsCertificationAuthority]CA' 
         }
     }
 }
