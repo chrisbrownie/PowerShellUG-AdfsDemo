@@ -18,6 +18,7 @@ If you want to just skip ahead, here's the environment as built:
 
 ### terraform
 This directory contains the content used by Terraform to create this lab.
+
 | File | Purpose |
 |--- | ---
 | data.tf | This file is used for pulling data from providers that will be used in the Terraform template. In this instance, it pulls the ID of the latest Windows Server 2016 (English) AMI
