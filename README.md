@@ -28,7 +28,7 @@ This directory contains the content used by Terraform to create this lab.
 | providers.tf | This file configures the providers (AWS, in this case)
 | securitygroups.tf | This file configures security groups to allow instances to access each other, the Internet, and to allow RDP access inbound
 | variables.tf | This file configures variables used elsewhere in the Terraform configuration
-| vpc.tf | This file configures the VPC that lives underneath the preceding infrastructre
+| vpc.tf | This file configures the VPC that lives underneath the preceding infrastructure
 | dsc/ConfigureDC.ps1 | This script is run as part of the user data for the DC instance. It installs the DSC prerequisites and kicks off the DSC script. This script is pulled from its URL at instance boot time.
 | dsc/ConfigureFS.ps1 | This script is run as part of the user data for the FS instance. It installs the DSC prerequisites and kicks off the DSC script. This script is pulled from its URL at instance boot time.
 | dsc/DSC-DC.ps1 | This script configures the domain controller instance with AD DS, DNS Server, and AD CS
