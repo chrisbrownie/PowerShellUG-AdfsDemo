@@ -19,7 +19,7 @@ resource "aws_instance" "fs" {
 Start-Transcript C:\provisionlog.txt
 Set-ExecutionPolicy Unrestricted -confirm:$false
 Get-NetIPAddress | Where {$_.InterfaceAlias -ilike "Ethernet*" -and $_.AddressFamily -eq "IPv4"} | % { Set-DnsClientServerAddress -InterfaceIndex $_.InterfaceIndex -ServerAddresses "8.8.8.8","8.8.4.4" }
-iwr 'https://raw.githubusercontent.com/chrisbrownie/PowerShellUG-AdfsDemo/master/200-terraform/dsc/ConfigureFS.ps1' -UseBasicParsing | iex
+iwr 'https://raw.githubusercontent.com/chrisbrownie/PowerShellUG-AdfsDemo/master/terraform/dsc/ConfigureFS.ps1' -UseBasicParsing | iex
 Stop-Transcript
 </powershell>
 EOF

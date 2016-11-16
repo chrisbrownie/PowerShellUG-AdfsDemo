@@ -9,4 +9,4 @@ Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
 
 Install-Module xComputerManagement,xActiveDirectory -confirm:$false
 
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/chrisbrownie/PowerShellUG-AdfsDemo/master/200-terraform/dsc/DSC-FS.ps1 -UseBasicParsing | Invoke-Expression
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/chrisbrownie/PowerShellUG-AdfsDemo/master/terraform/dsc/DSC-FS.ps1 -UseBasicParsing | Invoke-Expression
