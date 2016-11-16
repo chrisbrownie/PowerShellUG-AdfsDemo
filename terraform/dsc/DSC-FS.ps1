@@ -46,7 +46,7 @@ $ConfigData = @{
 }
 
 Configuration FS {
-    Import-DscResource -ModuleName xComputerManagement,xActiveDirectory
+    Import-DscResource -ModuleName xComputerManagement,xActiveDirectory,xNetworking
 
     Node $AllNodes.NodeName {
         LocalConfigurationManager {
