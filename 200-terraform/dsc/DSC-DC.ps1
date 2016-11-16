@@ -131,7 +131,6 @@ Configuration DC {
         xAdcsWebEnrollment CertSrv {
             Ensure           = 'Present'
             IsSingleInstance = 'Yes'
-            Name             = 'CertSrv'
             Credential       = $Credential
             DependsOn        = '[WindowsFeature]ADCS-Web-Enrollment','[xAdcsCertificationAuthority]CA' 
         }
