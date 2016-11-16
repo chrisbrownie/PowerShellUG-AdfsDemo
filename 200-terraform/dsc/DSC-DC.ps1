@@ -9,6 +9,7 @@ $settings = @{
     "Password"        = "Pass@word1"
     "DNSClientInterfaceAlias" = $(Get-NetIPConfiguration | Select -first 1 | Select -ExpandProperty InterfaceAlias)
     "DomainAdminUser" = "alan.reid"
+    "LabLifeSpan"      = 8 #hours (until the lab shuts itself down)
 }
 
 configuration LCM {
@@ -32,6 +33,7 @@ $ConfigData = @{
         DomainAdminUser = $settings.DomainAdminUser
         DNSClientInterfaceAlias = $settings.DNSClientInterfaceAlias
         DNSIP = $settings.DNSIP
+        DnsForwarders = $settings.DnsForwarderIPs
         # DO NOT USE the below in production. Lab only!
         PsDscAllowPlainTextPassword = $true
         PSDscAllowDomainUser = $true
@@ -39,7 +41,8 @@ $ConfigData = @{
 }
 
 Configuration DC {
-    Import-DscResource -ModuleName xActiveDirectory, xComputerManagement, xNetworking
+    Import-DscResource -ModuleName xActiveDirectory, xComputerManagement, `
+                        xNetworking, xAdcsDeployment, xDnsServer
 
     Node $AllNodes.NodeName {
         LocalConfigurationManager {
@@ -56,11 +59,6 @@ Configuration DC {
         xComputer SetName {
             Name = $Node.MachineName
         }
-
-        # Do I need to do this?
-        <#xIPAddress SetIP {
-
-        }#>
 
         xDNSServerAddress SetDNS {
             Address = $Node.DNSIP
@@ -89,21 +87,33 @@ Configuration DC {
             DependsOn = '[xComputer]SetName', '[WindowsFeature]ADDSInstall'
         }
 
-        <#xADUser demouser1 {
-            DomainAdministratorCredential = $Credential
-            DomainName                    = $Node.DomainFqdn
-            UserName                      = $Node.DomainAdminUser
-            Password                      = $Credential
-            Ensure                        = 'Present'
+        xDnsServerForwarder Forwarder {
+            IsSingleInstance = 'Yes'
+            IPAddresses = $node.DnsForwarders
+            DependsOn = "[xADDomain]DC"
         }
 
-        Script PromoteDemoUser1 {
-            SetScript = { Add-ADGroupMember -Identity "Domain Admins" -Members $using:Node.DomainAdminUser }
-            TestScript = { Get-ADGroupMember -Identity "Domain Admins" | Where {$_.Name -eq $using:Node.DomainAdminUser } }
-            GetScript = { Get-ADGroupMember -Identity "Domain Admins" | Where {$_.Name -eq $using:Node.DomainAdminUser } }
-        }#>
+        WindowsFeature ADCS-Cert-Authority {
+            Ensure = 'Present'
+            Name = 'ADCS-Cert-Authority'
+        }
+
+        xAdcsCertificationAuthority CA {
+            Ensure = 'Present'        
+            Credential = $Credential
+            CAType = 'EnterpriseRootCA'
+            DependsOn = '[WindowsFeature]ADCS-Cert-Authority'
+        }
     }
 }
 
 DC -ConfigurationData $ConfigData
 Start-DscConfiguration -Wait -Force -Path .\DC -Verbose
+
+#region schedtask
+# Add a scheduled task to shut the machine down (at which point the host will terminate it)
+$EndOfDays = (Get-Date).AddHours($LabLifeSpan)
+$action = New-ScheduledTaskAction -Execute 'shutdown.exe' -Argument '-s -t 180 -f'
+$trigger = New-ScheduledTaskTrigger -Once -At $EndOfDays
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Shut down computer" -Description "Shut down and trigger termination"
+#endregion
