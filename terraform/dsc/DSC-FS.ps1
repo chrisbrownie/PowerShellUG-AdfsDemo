@@ -46,7 +46,7 @@ $ConfigData = @{
 }
 
 Configuration FS {
-    Import-DscResource -ModuleName xComputerManagement
+    Import-DscResource -ModuleName xComputerManagement,xActiveDirectory
 
     Node $AllNodes.NodeName {
         LocalConfigurationManager {
@@ -66,11 +66,19 @@ Configuration FS {
             AddressFamily = "IPv4"
         }
 
+        xWaitForADDomain DscForestWait {
+            DomainName = $Node.DomainFqdn
+            DomainUserCredential = $Credential
+            RetryCount = 100
+            RetryIntervalSec = 30
+            DependsOn = '[xDNSServerAddress]SetDNS'
+        }
+
         xComputer Computer {
             Name = $Node.MachineName
             DomainName = $Node.DomainFqdn
             Credential = $Credential
-            DependsOn = '[xDNSServerAddressSet]DNS'
+            DependsOn = '[xWaitForADDomain]DscForestWait'
         }
     }
 }
