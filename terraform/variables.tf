@@ -31,7 +31,7 @@ variable "route53domainsuffix" {
 }
 
 variable "instanceSize" {
-    default = "t2.medium"
+    default = "t2.large"
 }
 
 variable "DCName" {
