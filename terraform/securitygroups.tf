@@ -4,6 +4,13 @@ resource "aws_security_group" "rdp" {
     vpc_id = "${aws_vpc.main.id}"
 
     ingress {
+        from_port = 0
+        to_port   = 0
+        protocol  = -1
+        self      = true
+    }
+
+    ingress {
         from_port = 3389
         to_port   = 3389
         protocol  = "tcp"
