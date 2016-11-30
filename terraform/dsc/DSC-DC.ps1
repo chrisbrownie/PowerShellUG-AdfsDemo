@@ -10,7 +10,7 @@ $settings = @{
     "DNSClientInterfaceAlias" = $(Get-NetIPConfiguration | Select -first 1 | Select -ExpandProperty InterfaceAlias)
     "DomainAdminUser" = "xareid"
     "DomainAdminUserDisplayName" = "Alan Reid (Admin)"
-    "LabLifeSpan"      = 8 #hours (until the lab shuts itself down)
+    "LabLifeSpan"      = 4 #hours (until the lab shuts itself down)
 }
 
 
