@@ -120,6 +120,11 @@ Configuration DC {
             DependsOn = '[WindowsFeature]ADCS-Cert-Authority' 
         }
 
+        WindowsFeature Web-Mgmt-Console {
+            Ensure = 'Present'
+            Name   = 'Web-Mgmt-Console'
+        }
+
         xAdcsCertificationAuthority CA {
             Ensure            = 'Present'        
             Credential        = $Credential
