@@ -50,6 +50,14 @@ variable "FSIP" {
     default = "192.168.1.50"
 }
 
+variable "CL01Name" {
+    default = "CL01"
+}
+
+variable "CL01IP" {
+    default = "192.168.1.101"
+}
+
 variable "awskey" {
     default = "labkey"
     description = "Name of SSH key to encrypt password"
