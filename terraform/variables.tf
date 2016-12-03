@@ -59,7 +59,6 @@ variable "CL01IP" {
 }
 
 variable "awskey" {
-    default = "labkey"
     description = "Name of SSH key to encrypt password"
 }
 
