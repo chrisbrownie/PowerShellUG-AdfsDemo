@@ -6,7 +6,6 @@ resource "aws_instance" "dc" {
     associate_public_ip_address = true
     key_name = "${var.awskey}"
     private_ip = "${var.DCIP}" 
-    iam_instance_profile = "${aws_iam_instance_profile.labserver.id}"
 
     # Terminate when the instances shut themselves down
     instance_initiated_shutdown_behavior = "terminate"
