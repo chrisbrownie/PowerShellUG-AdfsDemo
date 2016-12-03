@@ -13,7 +13,7 @@ $settings = @{
 
 #region schedtask
 # Add a scheduled task to shut the machine down (at which point the host will terminate it)
-$EndOfDays = (Get-Date).AddHours($LabLifeSpan)
+$EndOfDays = (Get-Date).AddHours($Settings.LabLifeSpan)
 $action = New-ScheduledTaskAction -Execute 'shutdown.exe' -Argument '-s -t 180 -f'
 $trigger = New-ScheduledTaskTrigger -Once -At $EndOfDays
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Shut down computer" -Description "Shut down and trigger termination"
