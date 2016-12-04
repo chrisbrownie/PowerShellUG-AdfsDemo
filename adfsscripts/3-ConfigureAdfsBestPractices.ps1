@@ -40,7 +40,7 @@ if ($BPs.EnableEndUserPasswordChange) {
     Write-Verbose "End-User Password Change check is disabled"
 }
 
-# Enable end-user password change
+# Enable WS-Trust 1.3
 if ($BPs.WsTrust13) {
     Write-Verbose "Enabling WS-Trust 1.3"
     Enable-AdfsEndpoint -TargetAddressPath "/adfs/services/trust/13/windowstransport"
