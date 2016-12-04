@@ -1,11 +1,11 @@
-resource "aws_instance" "dc" {
+resource "aws_instance" "cl01" {
     ami = "${data.aws_ami.windowsserver.id}"
     instance_type = "${var.instanceSize}"
     vpc_security_group_ids = ["${aws_security_group.rdp.id}"]
     subnet_id = "${aws_subnet.public1.id}"
     associate_public_ip_address = true
     key_name = "${var.awskey}"
-    private_ip = "${var.DCIP}" 
+    private_ip = "${var.CL01IP}" 
 
     # Terminate when the instances shut themselves down
     instance_initiated_shutdown_behavior = "terminate"
@@ -19,28 +19,21 @@ resource "aws_instance" "dc" {
 Start-Transcript C:\provisionlog.txt
 Set-ExecutionPolicy Unrestricted -confirm:$false
 Get-NetIPAddress | Where {$_.InterfaceAlias -ilike "Ethernet*" -and $_.AddressFamily -eq "IPv4"} | % { Set-DnsClientServerAddress -InterfaceIndex $_.InterfaceIndex -ServerAddresses "8.8.8.8","8.8.4.4" }
-iwr 'https://raw.githubusercontent.com/chrisbrownie/PowerShellUG-AdfsDemo/master/terraform/dsc/ConfigureDC.ps1' -UseBasicParsing | iex
+iwr 'https://raw.githubusercontent.com/chrisbrownie/PowerShellUG-AdfsDemo/master/terraform/dsc/ConfigureCL01.ps1' -UseBasicParsing | iex
 Stop-Transcript
 </powershell>
 EOF
     
     tags {
-        Name = "${var.DCName}"
+        Name = "${var.CL01Name}"
         env = "${var.env}"
     }
 }
 
-# The LabServer role must preexist in the account
-resource "aws_iam_instance_profile" "labserver" {
-    name = "labserver"
-    roles = ["LabServer"]
-}
-
-
-resource "aws_route53_record" "dc" {
+resource "aws_route53_record" "cl01" {
     zone_id = "${var.route53zoneid}"
-    name    = "${var.DCName}.${var.route53domainsuffix}"
+    name    = "${var.CL01Name}.${var.route53domainsuffix}"
     type    = "A"
     ttl     = "60"
-    records = ["${aws_instance.dc.public_ip}"]
+    records = ["${aws_instance.cl01.public_ip}"]
 }

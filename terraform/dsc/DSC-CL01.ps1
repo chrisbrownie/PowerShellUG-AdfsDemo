@@ -1,9 +1,9 @@
 # https://pleasework.robbievance.net/howto-desired-state-configuration-dsc-overview/
 
 $settings = @{
-    "ComputerName"    = "FS"
+    "ComputerName"    = "CL01"
     "DomainFqdn"      = "lab.flamingkeys.com"
-    "DNSIP"           = "192.168.1.20"
+    "DNSIP"           = "192.168.1.101"
     "DomainAdminUser" = "xareid"
     "Password"        = "Pass@word1"
     "DNSClientInterfaceAlias" = $(Get-NetIPConfiguration | Select -first 1 | Select -ExpandProperty InterfaceAlias)
