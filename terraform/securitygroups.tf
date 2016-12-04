@@ -1,6 +1,6 @@
 resource "aws_security_group" "rdp" {
     name = "rdp-anywhere"
-    description = "Allows RDP from anywhere"
+    description = "Allows ICMP, RDP, HTTP, and HTTPS from anywhere"
     vpc_id = "${aws_vpc.main.id}"
 
     ingress {
@@ -17,6 +17,19 @@ resource "aws_security_group" "rdp" {
         cidr_blocks = ["0.0.0.0/0"]
     }
 
+    ingress {
+        from_port = 80
+        to_port   = 80
+        protocol  = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+        from_port = 443
+        to_port   = 443
+        protocol  = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
     ingress {
         from_port = 0
         to_port = 0
