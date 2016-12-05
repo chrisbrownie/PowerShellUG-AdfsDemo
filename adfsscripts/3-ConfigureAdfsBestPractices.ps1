@@ -34,8 +34,8 @@ if ($BPs.EnableKMSI) {
 # Enable end-user password change
 if ($BPs.EnableEndUserPasswordChange) {
     Write-Verbose "Enabling End-User Password Change"
-    Enable-AdfsEndpoint "/adfs/portal/updatepassword/"
-    Set-AdfsEndpoint "/adfs/portal/updatepassword/" -Proxy:$true
+    Enable-AdfsEndpoint "/adfs/portal/updatepassword/" -Verbose:$false
+    Set-AdfsEndpoint "/adfs/portal/updatepassword/" -Proxy:$true -Verbose:$false
 } else {
     Write-Verbose "End-User Password Change check is disabled"
 }
@@ -43,7 +43,7 @@ if ($BPs.EnableEndUserPasswordChange) {
 # Enable WS-Trust 1.3
 if ($BPs.WsTrust13) {
     Write-Verbose "Enabling WS-Trust 1.3"
-    Enable-AdfsEndpoint -TargetAddressPath "/adfs/services/trust/13/windowstransport"
+    Enable-AdfsEndpoint -TargetAddressPath "/adfs/services/trust/13/windowstransport" -Verbose:$false
 } else {
     Write-Verbose "WS-Trust 1.3 check is disabled"
 }
@@ -89,7 +89,7 @@ if ($BPs.ExtendedTokenCertificateLifetime) {
 if ($BPs.SensibleLogging) {
     Write-Verbose "Enabling Sensible Logging"
     Set-ADFSProperties –LogLevel Information,Errors,Verbose,Warnings,FailureAudits,SuccessAudits
-    auditpol.exe /set /subcategory:"Application Generated" /failure:enable /success:enable
+    $null = auditpol.exe /set /subcategory:"Application Generated" /failure:enable /success:enable
 } else {
     Write-Verbose "Sensible Logging check is disabled"
 }
