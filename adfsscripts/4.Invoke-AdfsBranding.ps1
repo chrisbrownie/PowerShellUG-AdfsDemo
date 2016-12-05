@@ -86,9 +86,9 @@ $params = @{
     "LinkColour"                                        = "#008dcb"
 
     # Images
-    "Logo"                                              = "C:\adfs\assets\logo.jpg"
-    "Illustration"                                      = "C:\adfs\assets\illustration.png"
-    "Favicon"                                           = "C:\adfs\assets\favicon.ico"
+    "Logo"                                              = "C:\adfs\assets\logo.png"
+    "Illustration"                                      = "C:\adfs\assets\illustration.jpg"
+    "Favicon"                                           = $null
 
     }
 

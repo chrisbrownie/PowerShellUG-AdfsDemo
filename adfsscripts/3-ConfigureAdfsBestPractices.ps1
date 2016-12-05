@@ -21,7 +21,10 @@ $ExtranetLockoutRequirePDC = $false
 $VerbosePreference = "Continue"
 
 # Ensure AD FS farm behaviour level is 2016
-
+if ((Get-AdfsProperties).CurrentBehaviorLevel -lt 3) {
+    # The functional level is below the current level. Let's raise it
+    Invoke-AdfsFarmBehaviorLevelRaise -Confirm:$false -Force
+}
 
 # Enable KMSI
 if ($BPs.EnableKMSI) {
@@ -50,18 +53,18 @@ if ($BPs.WsTrust13) {
 
 # Enable Office 365 Password Expiry Notifications
 if ($BPs.Office365PasswordExpiry) {
-    Write-Verbose "Enabling Office 365 Password Expiry Claim"
+    Write-Verbose "Enabling Password Expiry Claim"
     Write-Warning "NOT IMPLEMENTED"
 } else {
-    Write-Verbose "Office 365 Password Expiry check is disabled"
+    Write-Verbose "Password Expiry Claim check is disabled"
 }
 
 # Enable OFfice 365 AuthN Methods References
 if ($BPs.Office365AuthNMethods) {
-    Write-Verbose "Enabling Office 365 AuthN Methods Claim"
+    Write-Verbose "Enabling AuthN Methods Reference Claim"
     Write-Warning "NOT IMPLEMENTED"
 } else {
-    Write-Verbose "Office 365 AuthN Methods check is disabled"
+    Write-Verbose "AuthN Methods Rerference check is disabled"
 }
 
 # Enable Extranet Lockout
