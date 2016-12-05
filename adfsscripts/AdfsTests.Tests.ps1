@@ -35,7 +35,6 @@ Describe "AdfsTests" {
     }
 
     It "has End-User Password Change Enabled" {
-        $true | Should Be $False
         $ep = Get-AdfsEndpoint "/adfs/portal/updatepassword/"
         if (
             ($ep.Enabled -eq $true) `
@@ -50,7 +49,6 @@ Describe "AdfsTests" {
     }
 
     It "has WS-Trust 1.3 Enabled" {
-        $true | Should Be $False
         $ep = Get-AdfsEndpoint "/adfs/services/trust/13/windowstransport"
         if (
             ($ep.Enabled -eq $true) `
