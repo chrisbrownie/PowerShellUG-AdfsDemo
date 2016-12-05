@@ -14,3 +14,10 @@ output "FS-DNS" {
     value = "${aws_route53_record.fs.fqdn}"
 }
 
+output "CL01-IP" {
+    value = "${aws_instance.cl01.public_ip}"
+}
+
+output "CL01-DNS" {
+    value = "${aws_instance.cl01.fqdn}"
+}
