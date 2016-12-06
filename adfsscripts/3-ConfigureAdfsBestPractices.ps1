@@ -1,7 +1,16 @@
-# From https://flamingkeys.com/adfsbp16
+###############################################################################
+# PowerShellUG-AdfsDemo 3-ConfigureAdfsBestPractices.ps1
+#
+# This script configures AD FS to meet best practices as defined in my blog
+# post here: https://flamingkeys.com/adfsbp16
+#
+# Author: Chris Brown (chris@chrisbrown.id.au)
+# Date:   08/12/2016
+###############################################################################
 
-# Set the below to $true to enable each feature. Setting a value to $false will
-# not disable it, the script will just make no changes
+# Set the below to $true to enable applying each feature. Setting a value to
+# $false will not the functionality the script will just make no changes
+
 $BPs = @{
     "RaiseFBL" = $true
     "EnableKMSI" = $true

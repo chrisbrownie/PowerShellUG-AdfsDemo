@@ -1,3 +1,12 @@
+###############################################################################
+# PowerShellUG-AdfsDemo AdfsTests.Tests.ps1
+#
+# This Pester test file tests that AD FS best practices are met 
+#
+# Author: Chris Brown (chris@chrisbrown.id.au)
+# Date:   08/12/2016
+###############################################################################
+
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 Describe "AdfsTests" {
@@ -8,6 +17,8 @@ Describe "AdfsTests" {
     }
 
     It "has AD FS Configured" {
+        # If an identifier exists, that's a pretty solid bet that AD FS
+        # is configured
         if ((Get-AdfsProperties).Identifier) {
             $configured = $true
         } else {
@@ -26,6 +37,7 @@ Describe "AdfsTests" {
     }
 
     It "is running WS2016 FBL" {
+        # A FarmBehaviorLevel of 3 is consistent with WS2016
         Get-AdfsProperties | Select -Expand CurrentFarmBehavior | Should Be 3
     }
 
