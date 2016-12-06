@@ -3,8 +3,6 @@ Content from my demonstration at the
 [Melbourne PowerShell meetup](https://www.meetup.com/Melbourne-PowerShell-Meetup/events/235311212/)
 in December 2016.
 
-
-
 ## The environment
 If you want to just skip ahead, here's the environment as built:
 
