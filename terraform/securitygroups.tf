@@ -1,3 +1,10 @@
+###############################################################################
+# PowerShellUG-AdfsDemo securitygroups.tf
+#
+# Author: Chris Brown (chris@chrisbrown.id.au)
+# Date:   08/12/2016
+###############################################################################
+
 resource "aws_security_group" "rdp" {
     name = "rdp-anywhere"
     description = "Allows ICMP, RDP, HTTP, and HTTPS from anywhere"

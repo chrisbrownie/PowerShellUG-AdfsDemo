@@ -1,3 +1,11 @@
+###############################################################################
+# PowerShellUG-AdfsDemo ec2-cl01.tf
+#
+# Author: Chris Brown (chris@chrisbrown.id.au)
+# Date:   08/12/2016
+###############################################################################
+
+# Create the CL01 instance
 resource "aws_instance" "cl01" {
     ami = "${data.aws_ami.windowsserver.id}"
     instance_type = "${var.instanceSize}"
@@ -30,6 +38,7 @@ EOF
     }
 }
 
+# Create the DNS record to point to CL01
 resource "aws_route53_record" "cl01" {
     zone_id = "${var.route53zoneid}"
     name    = "${var.CL01Name}.${var.route53domainsuffix}"

@@ -1,3 +1,10 @@
+###############################################################################
+# PowerShellUG-AdfsDemo outputs.tf
+#
+# Author: Chris Brown (chris@chrisbrown.id.au)
+# Date:   08/12/2016
+###############################################################################
+
 output "DC-IP" {
     value = "${aws_instance.dc.public_ip}"
 }

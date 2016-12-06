@@ -1,3 +1,11 @@
+###############################################################################
+# PowerShellUG-AdfsDemo ec2-dc.tf
+#
+# Author: Chris Brown (chris@chrisbrown.id.au)
+# Date:   08/12/2016
+###############################################################################
+
+# Create the DC instance
 resource "aws_instance" "dc" {
     ami = "${data.aws_ami.windowsserver.id}"
     instance_type = "${var.instanceSize}"
@@ -30,13 +38,7 @@ EOF
     }
 }
 
-# The LabServer role must preexist in the account
-resource "aws_iam_instance_profile" "labserver" {
-    name = "labserver"
-    roles = ["LabServer"]
-}
-
-
+# Create the DNS record to point to DC
 resource "aws_route53_record" "dc" {
     zone_id = "${var.route53zoneid}"
     name    = "${var.DCName}.${var.route53domainsuffix}"

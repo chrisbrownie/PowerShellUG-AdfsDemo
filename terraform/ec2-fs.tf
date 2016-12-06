@@ -1,3 +1,11 @@
+###############################################################################
+# PowerShellUG-AdfsDemo ec2-fs.tf
+#
+# Author: Chris Brown (chris@chrisbrown.id.au)
+# Date:   08/12/2016
+###############################################################################
+
+# Create the FS instance
 resource "aws_instance" "fs" {
     ami = "${data.aws_ami.windowsserver.id}"
     instance_type = "${var.instanceSize}"
@@ -30,6 +38,7 @@ EOF
     }
 }
 
+# Create the DNS record to point at the FS instance
 resource "aws_route53_record" "fs" {
     zone_id = "${var.route53zoneid}"
     name    = "${var.FSName}.${var.route53domainsuffix}"
