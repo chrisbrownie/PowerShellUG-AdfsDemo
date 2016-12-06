@@ -1,4 +1,11 @@
-# Preparing to run the real DSC script
+###############################################################################
+# PowerShellUG-AdfsDemo ConfigureCL01.ps1
+#
+# This script bootstraps the instance in preparation for DSC configuration
+#
+# Author: Chris Brown (chris@chrisbrown.id.au)
+# Date:   08/12/2016
+###############################################################################
 
 # Install the nuget provider
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
@@ -6,7 +13,8 @@ Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 # Trust the PSGallery repo
 Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
 
-
+# Install the required DSC modules
 Install-Module xComputerManagement,xActiveDirectory,xNetworking,Pester -confirm:$false
 
+# Download and execute the configuration script from GitHub
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/chrisbrownie/PowerShellUG-AdfsDemo/master/terraform/dsc/DSC-CL01.ps1 -UseBasicParsing | Invoke-Expression
