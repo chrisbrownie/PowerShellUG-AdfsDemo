@@ -22,7 +22,7 @@ $trigger = New-ScheduledTaskTrigger -Once -At $EndOfDays
 $upn = $settings.DomainAdminUser + "@" + $settings.DomainFqdn
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Shut down computer" `
     -Description "Shut down and trigger termination" `
-    -user $upn -Password $settings.Password 
+    -user "NT AUTHORITY\SYSTEM" 
 #endregion
 
 configuration LCM {
