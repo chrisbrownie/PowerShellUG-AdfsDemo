@@ -3,7 +3,7 @@
 $settings = @{
     "ComputerName"    = "CL01"
     "DomainFqdn"      = "lab.flamingkeys.com"
-    "DNSIP"           = "192.168.1.101"
+    "DNSIP"           = "192.168.1.20"
     "DomainAdminUser" = "xareid"
     "Password"        = "Pass@word1"
     "DNSClientInterfaceAlias" = $(Get-NetIPConfiguration | Select -first 1 | Select -ExpandProperty InterfaceAlias)
@@ -48,7 +48,7 @@ $ConfigData = @{
     })
 }
 
-Configuration FS {
+Configuration CL {
     Import-DscResource -ModuleName xComputerManagement,xActiveDirectory,xNetworking
 
     Node $AllNodes.NodeName {
@@ -96,5 +96,5 @@ Configuration FS {
     }
 }
 
-FS -ConfigurationData $ConfigData
-Start-DscConfiguration -Wait -Force -Path .\FS -Verbose
+CL -ConfigurationData $ConfigData
+Start-DscConfiguration -Wait -Force -Path .\CL -Verbose
