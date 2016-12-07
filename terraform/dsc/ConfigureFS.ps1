@@ -59,7 +59,7 @@ Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
 
 # Install the required DSC modules
-Install-Module xComputerManagement,xActiveDirectory,xNetworking,Pester -confirm:$false
+Install-Module xComputerManagement,xActiveDirectory,xNetworking,xSystemSecurity,Pester -confirm:$false
 
 # Download and execute the configuration script from GitHub
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/chrisbrownie/PowerShellUG-AdfsDemo/master/terraform/dsc/DSC-FS.ps1 -UseBasicParsing | Invoke-Expression
