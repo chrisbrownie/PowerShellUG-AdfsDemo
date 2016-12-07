@@ -13,7 +13,7 @@ data "aws_ami" "windowsserver" {
         # Uncomment for WS2016
         #values = ["*Windows_Server-2016-English-Full-Base-*"]
         # Uncomment for WS2012R2
-        values = ["Windows_Server-2012-R2_RTM-English-64Bit-Base"]
+        values = ["*Windows_Server-2012-R2_RTM-English-64Bit-Base*"]
     }
     owners = ["amazon"]
 }
