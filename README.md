@@ -8,9 +8,9 @@ If you want to just skip ahead, here's the environment as built:
 
 | Hostname | Operating System | IP Address(es) | Role |
 |---|---|---|---
-| DC01 | Windows Server 2012 R2 Standard | 192.168.1.20 | Domain Controller, Certificate Authority |
-| FS01 | Windows Server 2012 R2 Standard | 192.168.1.50 | AD FS Server |
-| CL01 | Windows Server 2012 R2 Standard | 192.168.1.101 | Client Computer |
+| DC01 | Windows Server 2016 Standard | 192.168.1.20 | Domain Controller, Certificate Authority |
+| FS01 | Windows Server 2016 Standard | 192.168.1.50 | AD FS Server |
+| CL01 | Windows Server 2016 Standard | 192.168.1.101 | Client Computer |
 
 ## The code
 
