@@ -105,6 +105,15 @@ Configuration DC {
             DependsOn = "[xADDomain]DC"
         }
 
+        # Create a DNS record for AD FS
+        xDnsRecord sts {
+            Name ='sts'
+            Zone = $node.DomainFqdn
+            Target = "192.168.1.50"
+            Type = "ARecord"
+            Ensure = "Present"
+        }
+
         # Ensure the AD CS role is installed
         WindowsFeature ADCS-Cert-Authority {
             Ensure = 'Present'
