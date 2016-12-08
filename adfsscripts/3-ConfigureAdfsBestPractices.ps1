@@ -100,7 +100,7 @@ if ($BPs.ExtendedTokenCertificateLifetime) {
 # Enable Sensible Logging
 if ($BPs.SensibleLogging) {
     Write-Verbose "Enabling Sensible Logging"
-    Set-ADFSProperties –LogLevel Information,Errors,Verbose,Warnings,FailureAudits,SuccessAudits
+    Set-ADFSProperties -LogLevel Information,Errors,Verbose,Warnings,FailureAudits,SuccessAudits
     $null = auditpol.exe /set /subcategory:"Application Generated" /failure:enable /success:enable
 } else {
     Write-Verbose "Sensible Logging check is disabled"
