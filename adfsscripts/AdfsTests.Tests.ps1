@@ -73,13 +73,14 @@ Describe "AdfsTests" {
         $eupcEnabled | Should Be $true
     }
 
+    <#
     It "has Office 365 Password Expiry Notifications Enabled" {
         $true | Should Be $False
     }
 
     It "has Office 365 AuthN Methods References Enabled" {
         $true | Should Be $False
-    }
+    }#>
 
     It "has Extranet Lockout enabled" {
         (Get-AdfsProperties).ExtranetLockoutEnabled |
