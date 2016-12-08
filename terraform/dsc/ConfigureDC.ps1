@@ -7,6 +7,8 @@
 # Date:   08/12/2016
 ###############################################################################
 
+Write-Output "ConfigureDC.ps1 beginning"
+
 # Install the nuget provider
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 

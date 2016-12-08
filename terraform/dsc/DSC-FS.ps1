@@ -1,5 +1,7 @@
 # https://pleasework.robbievance.net/howto-desired-state-configuration-dsc-overview/
 
+Write-Output "DSC-CL01.ps1 beginning"
+
 $settings = @{
     "ComputerName"    = "FS"
     "DomainFqdn"      = "lab.flamingkeys.com"

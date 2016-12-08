@@ -7,6 +7,8 @@
 # Date:   08/12/2016
 ###############################################################################
 
+Write-Output "ConfigureFS.ps1 beginning"
+
 # This script downloads files from a GitHub repo
 function DownloadFilesFromRepo {
 Param(
