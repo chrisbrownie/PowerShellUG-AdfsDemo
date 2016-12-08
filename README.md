@@ -46,5 +46,5 @@ This directory contains the content used by Terraform to create this lab.
 | AdfsTests.Tests.ps1 | This is a pester tests file for testing that the AD FS environment meets a number of requirements
 
 ## References
-* Review the slides from the presentation on [Docs.com](https://docs.com/chrisbrown)
+* Review the slides from the presentation on [Docs.com](https://docs.com/chrisbrown/1408/automating-everything)
 * Contribute to or view my [AD FS Branding](https://github.com/chrisbrownie/Invoke-AdfsBranding) script
