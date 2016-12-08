@@ -23,13 +23,13 @@ Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Shut down co
     -Description "Shut down and trigger termination" `
     -user "NT AUTHORITY\SYSTEM"
 #endregion
+#>
 
 configuration LCM {
     LocalConfigurationManager {            
         RebootNodeIfNeeded = $true
     }            
 }
-#>
 
 LCM -OutputPath $env:TEMP
 Set-DscLocalConfigurationManager -Path $env:TEMP
