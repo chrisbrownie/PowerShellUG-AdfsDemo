@@ -15,7 +15,7 @@ $settings = @{
     "LabLifeSpan"      = 4 #hours (until the lab shuts itself down)
 }
 
-
+<#
 #region schedtask
 # Add a scheduled task to shut the machine down (at which point the host will terminate it)
 $EndOfDays = (Get-Date).AddHours($Settings.LabLifeSpan)
@@ -32,6 +32,7 @@ configuration LCM {
         RebootNodeIfNeeded = $true
     }            
 }
+#>
 
 LCM -OutputPath $env:TEMP
 Set-DscLocalConfigurationManager -Path $env:TEMP
