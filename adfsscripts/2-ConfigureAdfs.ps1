@@ -24,3 +24,6 @@ Add-KdsRootKey -EffectiveTime (Get-Date).AddHours(-10)
 Install-AdfsFarm -CertificateThumbprint $myCert.Certificate.Thumbprint `
     -FederationServiceName "$adfsFqdn" `
     -GroupServiceAccountIdentifier "LAB\svc_adfs$"
+
+# Enable the IdP Initiated Sign-On Page
+Set-AdfsProperties -EnableIdPInitiatedSignonPage:$true
