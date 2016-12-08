@@ -30,10 +30,10 @@ $ExtranetLockoutRequirePDC = $false
 $VerbosePreference = "Continue"
 
 # Ensure AD FS farm behaviour level is 2016
-if ((Get-AdfsProperties).CurrentBehaviorLevel -lt 3) {
+<#if ((Get-AdfsProperties).CurrentBehaviorLevel -lt 3) {
     # The functional level is below the current level. Let's raise it
     Invoke-AdfsFarmBehaviorLevelRaise -Confirm:$false -Force
-}
+}#>
 
 # Enable KMSI
 if ($BPs.EnableKMSI) {
