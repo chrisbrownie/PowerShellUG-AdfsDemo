@@ -181,16 +181,7 @@ Configuration DC {
             GroupName = 'Domain Admins'
             MembersToInclude = $node.DomainAdminUser
         }
-        
-        xIEEsc DisableIeEsc {
-            IsEnabled = $False
-            UserRole = "Users"
-        }
 
-        xIEEsc DisableIeEscAdmin {
-            IsEnabled = $false
-            UserRole = "Administrators"
-        }
     }
 }
 

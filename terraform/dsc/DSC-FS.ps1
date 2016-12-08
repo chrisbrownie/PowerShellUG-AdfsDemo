@@ -87,15 +87,6 @@ Configuration FS {
             DependsOn = '[xWaitForADDomain]DscForestWait'
         }
         
-        xIEEsc DisableIeEsc {
-            IsEnabled = $False
-            UserRole = "Users"
-        }
-
-        xIEEsc DisableIeEscAdmin {
-            IsEnabled = $false
-            UserRole = "Administrators"
-        }
     }
 }
 
