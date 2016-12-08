@@ -93,9 +93,9 @@ Describe "AdfsTests" {
         $tsCert = Get-AdfsCertificate | Where {$_.CertificateType -eq "Token-Signing"} | 
             Select -Expand Certificate | Sort-Object NotAfter | Select -first 1
         
-        if ($tdCert.NotAfter -lt $(Get-Date).AddYears(1)) {
+        if ($tdCert.NotAfter -lt $(Get-Date).AddYears(2)) {
             $extendedLifetimes = $false
-        } elseif ($tsCert.NotAfter -lt $(Get-Date).AddYears(1)) {
+        } elseif ($tsCert.NotAfter -lt $(Get-Date).AddYears(2)) {
             $extendedLifetimes = $false
         }
     }
