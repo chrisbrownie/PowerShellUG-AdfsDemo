@@ -55,7 +55,8 @@ if ($BPs.EnableEndUserPasswordChange) {
 # Enable WS-Trust 1.3
 if ($BPs.WsTrust13) {
     Write-Verbose "Enabling WS-Trust 1.3"
-    Enable-AdfsEndpoint -TargetAddressPath "/adfs/services/trust/13/windowstransport" -Verbose:$false
+    Enable-AdfsEndpoint "/adfs/services/trust/13/windowstransport" -Verbose:$false
+    Set-AdfsEndpoint "/adfs/services/trust/13/windowstransport" -Proxy:$true -Verbose:$false
 } else {
     Write-Verbose "WS-Trust 1.3 check is disabled"
 }
