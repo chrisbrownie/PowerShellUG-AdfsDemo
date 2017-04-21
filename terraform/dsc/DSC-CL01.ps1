@@ -1,9 +1,11 @@
 # https://pleasework.robbievance.net/howto-desired-state-configuration-dsc-overview/
 
+Write-Output "DSC-CL01.ps1 beginning"
+
 $settings = @{
     "ComputerName"    = "CL01"
     "DomainFqdn"      = "lab.flamingkeys.com"
-    "DNSIP"           = "192.168.1.101"
+    "DNSIP"           = "192.168.1.20"
     "DomainAdminUser" = "xareid"
     "Password"        = "Pass@word1"
     "DNSClientInterfaceAlias" = $(Get-NetIPConfiguration | Select -first 1 | Select -ExpandProperty InterfaceAlias)
@@ -13,11 +15,16 @@ $settings = @{
 
 #region schedtask
 # Add a scheduled task to shut the machine down (at which point the host will terminate it)
-$EndOfDays = (Get-Date).AddHours($Settings.LabLifeSpan)
+<#$EndOfDays = (Get-Date).AddHours($Settings.LabLifeSpan)
 $action = New-ScheduledTaskAction -Execute 'shutdown.exe' -Argument '-s -t 180 -f'
 $trigger = New-ScheduledTaskTrigger -Once -At $EndOfDays
-Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Shut down computer" -Description "Shut down and trigger termination"
+$upn = $settings.DomainAdminUser + "@" + $settings.DomainFqdn
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Shut down computer" `
+    -Description "Shut down and trigger termination" `
+    -User "NT AUTHORITY\SYSTEM"
+    #-user $upn -Password $settings.Password 
 #endregion
+#>
 
 configuration LCM {
     LocalConfigurationManager {            
@@ -45,7 +52,7 @@ $ConfigData = @{
     })
 }
 
-Configuration FS {
+Configuration CL {
     Import-DscResource -ModuleName xComputerManagement,xActiveDirectory,xNetworking
 
     Node $AllNodes.NodeName {
@@ -80,8 +87,9 @@ Configuration FS {
             Credential = $Credential
             DependsOn = '[xWaitForADDomain]DscForestWait'
         }
+
     }
 }
 
-FS -ConfigurationData $ConfigData
-Start-DscConfiguration -Wait -Force -Path .\FS -Verbose
+CL -ConfigurationData $ConfigData
+Start-DscConfiguration -Wait -Force -Path .\CL -Verbose

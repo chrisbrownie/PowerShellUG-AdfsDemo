@@ -42,8 +42,7 @@ Describe "AdfsTests" {
     }
 
     It "has KMSI enabled" {
-        (Get-AdfsProperties).EnableKmsi |
-            Should Be $true
+        (Get-AdfsProperties).KmsiEnabled | Should Be $true
     }
 
     It "has End-User Password Change Enabled" {
@@ -61,7 +60,7 @@ Describe "AdfsTests" {
     }
 
     It "has WS-Trust 1.3 Enabled" {
-        $ep = Get-AdfsEndpoint "/adfs/services/trust/13/windowstransport"
+        $ep = Get-AdfsEndpoint -AddressPath "/adfs/services/trust/13/windowstransport"
         if (
             ($ep.Enabled -eq $true) `
             -and ($ep.Proxy -eq $true)
@@ -74,21 +73,32 @@ Describe "AdfsTests" {
         $eupcEnabled | Should Be $true
     }
 
+    <#
     It "has Office 365 Password Expiry Notifications Enabled" {
         $true | Should Be $False
     }
 
     It "has Office 365 AuthN Methods References Enabled" {
         $true | Should Be $False
-    }
+    }#>
 
     It "has Extranet Lockout enabled" {
-        (Get-AdfsProperties).EnableExtranetLockout |
+        (Get-AdfsProperties).ExtranetLockoutEnabled |
             Should Be $true
     }
 
     It "has extended token signing/decrypting lifetimes" {
-        $true | Should Be $False
+        $extendedLifetimes = $true
+        $tdCert = Get-AdfsCertificate | Where {$_.CertificateType -eq "Token-Decrypting"} | 
+            Select -Expand Certificate | Sort-Object NotAfter | Select -first 1
+        $tsCert = Get-AdfsCertificate | Where {$_.CertificateType -eq "Token-Signing"} | 
+            Select -Expand Certificate | Sort-Object NotAfter | Select -first 1
+        
+        if ($tdCert.NotAfter -lt $(Get-Date).AddYears(2)) {
+            $extendedLifetimes = $false
+        } elseif ($tsCert.NotAfter -lt $(Get-Date).AddYears(2)) {
+            $extendedLifetimes = $false
+        }
     }
 
     It "has sensible logging enabled" {

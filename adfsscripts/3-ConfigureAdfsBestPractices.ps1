@@ -30,10 +30,10 @@ $ExtranetLockoutRequirePDC = $false
 $VerbosePreference = "Continue"
 
 # Ensure AD FS farm behaviour level is 2016
-if ((Get-AdfsProperties).CurrentBehaviorLevel -lt 3) {
+<#if ((Get-AdfsProperties).CurrentBehaviorLevel -lt 3) {
     # The functional level is below the current level. Let's raise it
     Invoke-AdfsFarmBehaviorLevelRaise -Confirm:$false -Force
-}
+}#>
 
 # Enable KMSI
 if ($BPs.EnableKMSI) {
@@ -55,7 +55,8 @@ if ($BPs.EnableEndUserPasswordChange) {
 # Enable WS-Trust 1.3
 if ($BPs.WsTrust13) {
     Write-Verbose "Enabling WS-Trust 1.3"
-    Enable-AdfsEndpoint -TargetAddressPath "/adfs/services/trust/13/windowstransport" -Verbose:$false
+    Enable-AdfsEndpoint "/adfs/services/trust/13/windowstransport" -Verbose:$false
+    Set-AdfsEndpoint "/adfs/services/trust/13/windowstransport" -Proxy:$true -Verbose:$false
 } else {
     Write-Verbose "WS-Trust 1.3 check is disabled"
 }
@@ -100,7 +101,7 @@ if ($BPs.ExtendedTokenCertificateLifetime) {
 # Enable Sensible Logging
 if ($BPs.SensibleLogging) {
     Write-Verbose "Enabling Sensible Logging"
-    Set-ADFSProperties –LogLevel Information,Errors,Verbose,Warnings,FailureAudits,SuccessAudits
+    Set-ADFSProperties -LogLevel Information,Errors,Verbose,Warnings,FailureAudits,SuccessAudits
     $null = auditpol.exe /set /subcategory:"Application Generated" /failure:enable /success:enable
 } else {
     Write-Verbose "Sensible Logging check is disabled"

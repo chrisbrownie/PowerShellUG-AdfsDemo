@@ -1,5 +1,7 @@
 # https://pleasework.robbievance.net/howto-desired-state-configuration-dsc-overview/
 
+Write-Output "DSC-CL01.ps1 beginning"
+
 $settings = @{
     "ComputerName"    = "FS"
     "DomainFqdn"      = "lab.flamingkeys.com"
@@ -10,14 +12,18 @@ $settings = @{
     "LabLifeSpan"      = 4 #hours (until the lab shuts itself down)
 }
 
-
+<#
 #region schedtask
 # Add a scheduled task to shut the machine down (at which point the host will terminate it)
 $EndOfDays = (Get-Date).AddHours($Settings.LabLifeSpan)
 $action = New-ScheduledTaskAction -Execute 'shutdown.exe' -Argument '-s -t 180 -f'
 $trigger = New-ScheduledTaskTrigger -Once -At $EndOfDays
-Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Shut down computer" -Description "Shut down and trigger termination"
+$upn = $settings.DomainAdminUser + "@" + $settings.DomainFqdn
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "Shut down computer" `
+    -Description "Shut down and trigger termination" `
+    -user "NT AUTHORITY\SYSTEM"
 #endregion
+#>
 
 configuration LCM {
     LocalConfigurationManager {            
@@ -80,6 +86,7 @@ Configuration FS {
             Credential = $Credential
             DependsOn = '[xWaitForADDomain]DscForestWait'
         }
+        
     }
 }
 

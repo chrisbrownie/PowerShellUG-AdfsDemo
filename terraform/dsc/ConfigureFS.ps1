@@ -7,6 +7,8 @@
 # Date:   08/12/2016
 ###############################################################################
 
+Write-Output "ConfigureFS.ps1 beginning"
+
 # This script downloads files from a GitHub repo
 function DownloadFilesFromRepo {
 Param(
@@ -59,7 +61,7 @@ Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
 
 # Install the required DSC modules
-Install-Module xComputerManagement,xActiveDirectory,xNetworking,Pester -confirm:$false
+Install-Module xComputerManagement,xActiveDirectory,xNetworking,xSystemSecurity,Pester -confirm:$false
 
 # Download and execute the configuration script from GitHub
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/chrisbrownie/PowerShellUG-AdfsDemo/master/terraform/dsc/DSC-FS.ps1 -UseBasicParsing | Invoke-Expression

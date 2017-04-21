@@ -326,14 +326,14 @@ Write-Verbose "Uploading web theme."
 
 $AdditionalFileResources = @{
         Uri = "/adfs/portal/script/onload.js"
-        Path = (Join-Path $CustomThemePath "script\onload.js")
+        Path = (Join-Path $CustomThemePath "script\onload.js").ToString()
     }
 
 if ($params.FavIcon) {
     # We need to upload the favicon, so add it to the list
      $AdditionalFileResources += @{
          Uri = "/adfs/portal/logo/favicon.ico"
-         Path = (Join-Path $CustomThemePath "script\onload.js")
+         Path = (Join-Path $CustomThemePath "script\onload.js").ToString()
      }
 }
 
